@@ -108,7 +108,17 @@ def detect(opt):
                     if save_img or opt.save_crop or view_img:  # Add bbox to image
                         c = int(cls)  # integer class
                         label = None if opt.hide_labels else (names[c] if opt.hide_conf else f'{names[c]} {conf:.2f}')
-                        plot_one_box(xyxy, im0, label=label, color=colors(c, True), line_thickness=opt.line_thickness)
+                        plot_one_box(xyxy, im0, label=label, color=colors(c, True), line_thickness=1)
+                        target1 = torch.tensor(xyxy[0])
+                        target2 = torch.tensor(xyxy[1])
+                        target3 = torch.tensor(xyxy[2])
+                        target4 = torch.tensor(xyxy[3])
+
+                        x = target1.item()
+                        y = target2.item()
+                        w = target3.item()
+                        h = target4.item()
+                        print(x,y,w,h)
                         if opt.save_crop:
                             save_one_box(xyxy, imc, file=save_dir / 'crops' / names[c] / f'{p.stem}.jpg', BGR=True)
 
